@@ -1,0 +1,24 @@
+version: "3.8"
+
+# Base de datos PostgreSQL para el proyecto Django del examen.
+# Es independiente de la de Odoo: usa el puerto 5433 del host.
+#
+#   docker-compose up -d
+#
+services:
+  db:
+    image: postgres:16
+    container_name: ute_django_db
+    environment:
+      POSTGRES_DB: academico
+      POSTGRES_USER: academico
+      POSTGRES_PASSWORD: academico
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+    volumes:
+      - django-db-data:/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+
+volumes:
+  django-db-data:

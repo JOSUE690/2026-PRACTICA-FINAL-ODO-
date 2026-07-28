@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_ute_root"
+              name="Académico UTE"
+              sequence="10"/>
+
+    <menuitem id="menu_ute_operaciones"
+              name="Operaciones"
+              parent="menu_ute_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ute_estudiante"
+              name="Estudiantes"
+              parent="menu_ute_operaciones"
+              action="action_ute_estudiante"
+              sequence="10"/>
+
+    <menuitem id="menu_ute_matricula"
+              name="Matrículas"
+              parent="menu_ute_operaciones"
+              action="action_ute_matricula"
+              sequence="20"/>
+
+    <menuitem id="menu_ute_config"
+              name="Configuración"
+              parent="menu_ute_root"
+              sequence="90"/>
+
+    <menuitem id="menu_ute_carrera"
+              name="Carreras"
+              parent="menu_ute_config"
+              action="action_ute_carrera"
+              sequence="10"/>
+
+</odoo>
