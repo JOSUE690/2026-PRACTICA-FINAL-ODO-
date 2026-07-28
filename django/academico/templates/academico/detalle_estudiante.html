@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del estudiante</title>
+</head>
+<body>
+    <h1>{{ estudiante.name }}</h1>
+    <p><strong>Cédula:</strong> {{ estudiante.cedula }}</p>
+    <p><strong>Email:</strong> {{ estudiante.email }}</p>
+    <p><strong>Carrera:</strong> {{ estudiante.carrera_id.name }}</p>
+    <p><strong>Estado:</strong> {{ estudiante.get_estado_display }}</p>
+    <p><strong>Edad:</strong> {{ estudiante.edad }}</p>
+    <a href="{% url 'lista_estudiantes' %}">Volver a la lista</a>
+</body>
+</html>

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'academico',   <- registra aquí tu app
+    'academico',   
 ]
 
 MIDDLEWARE = [
@@ -75,18 +75,41 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# PostgreSQL: el contenedor definido en django/docker-compose.yml.
-# Los valores por defecto funcionan sin configurar nada; se pueden
-# sobrescribir con variables de entorno si hace falta.
-DATABASES = {
-    'default': {
+# Por defecto se usa SQLite para que el proyecto arranque localmente.
+# Si PostgreSQL está disponible en el host y se desea usar, basta con
+# dejar la configuración de Postgres y no usar el fallback.
+def get_database_config():
+    host = os.environ.get('DB_HOST', 'localhost')
+    port = int(os.environ.get('DB_PORT', '5433'))
+
+    if os.environ.get('USE_SQLITE', '1') == '1':
+        return {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+
+    try:
+        import socket
+        with socket.create_connection((host, port), timeout=0.5):
+            pass
+    except OSError:
+        return {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+
+    return {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'academico'),
         'USER': os.environ.get('DB_USER', 'academico'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'academico'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5433'),
+        'HOST': host,
+        'PORT': port,
     }
+
+
+DATABASES = {
+    'default': get_database_config()
 }
 
 
