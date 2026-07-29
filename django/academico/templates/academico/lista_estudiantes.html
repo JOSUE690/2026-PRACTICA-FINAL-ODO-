@@ -1,20 +1,32 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de estudiantes</title>
-</head>
-<body>
-    <h1>Estudiantes</h1>
-    <ul>
+{% extends 'academico/base.html' %}
+
+{% block title %}Lista de estudiantes{% endblock %}
+
+{% block content %}
+<h1>Estudiantes</h1>
+
+{% if estudiantes %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Carrera</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for estudiante in estudiantes %}
-            <li>
-                <a href="{% url 'detalle_estudiante' estudiante.pk %}">{{ estudiante.name }}</a>
-                - {{ estudiante.cedula }}
-            </li>
-        {% empty %}
-            <li>No hay estudiantes registrados.</li>
+            <tr>
+                <td><a href="{% url 'detalle_estudiante' estudiante.pk %}">{{ estudiante.name }}</a></td>
+                <td>{{ estudiante.cedula }}</td>
+                <td>{{ estudiante.carrera_id.name }}</td>
+                <td>{{ estudiante.get_estado_display }}</td>
+            </tr>
         {% endfor %}
-    </ul>
-</body>
-</html>
+    </tbody>
+</table>
+{% else %}
+<p>No hay estudiantes registrados.</p>
+{% endif %}
+{% endblock %}

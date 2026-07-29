@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Academico{% endblock %}</title>
+</head>
+<body>
+    <h3>Gestion Academica UTE</h3>
+    <a href="{% url 'lista_estudiantes' %}">Estudiantes</a> |
+    <a href="/admin/">Admin</a>
+
+    <hr>
+
+    {% block content %}{% endblock %}
+
+</body>
+</html>

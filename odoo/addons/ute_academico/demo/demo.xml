@@ -1,3 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="demo_carrera_sistemas" model="ute.carrera">
+        <field name="name">Ingeniería en Sistemas</field>
+        <field name="codigo">SIS01</field>
+        <field name="modalidad">presencial</field>
+        <field name="duracion_semestres">9</field>
+        <field name="cupo_maximo">40</field>
+    </record>
+
+    <record id="demo_carrera_admin" model="ute.carrera">
+        <field name="name">Administración de Empresas</field>
+        <field name="codigo">ADM01</field>
+        <field name="modalidad">online</field>
+        <field name="duracion_semestres">8</field>
+        <field name="cupo_maximo">50</field>
+    </record>
+
+    <record id="demo_estudiante_1" model="ute.estudiante">
+        <field name="name">Juan Pérez</field>
+        <field name="cedula">1000000001</field>
+        <field name="email">juan.perez@example.com</field>
+        <field name="genero">M</field>
+        <field name="carrera_id" ref="demo_carrera_sistemas"/>
+        <field name="estado">activo</field>
+    </record>
+
+    <record id="demo_estudiante_2" model="ute.estudiante">
+        <field name="name">María López</field>
+        <field name="cedula">1000000002</field>
+        <field name="email">maria.lopez@example.com</field>
+        <field name="genero">F</field>
+        <field name="carrera_id" ref="demo_carrera_sistemas"/>
+        <field name="estado">activo</field>
+    </record>
+
+    <record id="demo_estudiante_3" model="ute.estudiante">
+        <field name="name">Carlos Ruiz</field>
+        <field name="cedula">1000000003</field>
+        <field name="email">carlos.ruiz@example.com</field>
+        <field name="genero">M</field>
+        <field name="carrera_id" ref="demo_carrera_admin"/>
+        <field name="estado">retirado</field>
+    </record>
+
+    <record id="demo_estudiante_4" model="ute.estudiante">
+        <field name="name">Ana Torres</field>
+        <field name="cedula">1000000004</field>
+        <field name="email">ana.torres@example.com</field>
+        <field name="genero">F</field>
+        <field name="carrera_id" ref="demo_carrera_admin"/>
+        <field name="estado">activo</field>
+    </record>
+
+    <record id="demo_matricula_1" model="ute.matricula">
+        <field name="name">MAT-001</field>
+        <field name="estudiante_id" ref="demo_estudiante_1"/>
+        <field name="periodo">2026-01</field>
+        <field name="asignatura">Programación II</field>
+        <field name="creditos">4</field>
+        <field name="estado">confirmada</field>
+    </record>
+
+    <record id="demo_matricula_2" model="ute.matricula">
+        <field name="name">MAT-002</field>
+        <field name="estudiante_id" ref="demo_estudiante_1"/>
+        <field name="periodo">2026-01</field>
+        <field name="asignatura">Base de Datos</field>
+        <field name="creditos">3</field>
+        <field name="estado">borrador</field>
+    </record>
+
+    <record id="demo_matricula_3" model="ute.matricula">
+        <field name="name">MAT-003</field>
+        <field name="estudiante_id" ref="demo_estudiante_2"/>
+        <field name="periodo">2026-01</field>
+        <field name="asignatura">Programación II</field>
+        <field name="creditos">4</field>
+        <field name="estado">confirmada</field>
+    </record>
+
+    <record id="demo_matricula_4" model="ute.matricula">
+        <field name="name">MAT-004</field>
+        <field name="estudiante_id" ref="demo_estudiante_3"/>
+        <field name="periodo">2026-01</field>
+        <field name="asignatura">Contabilidad</field>
+        <field name="creditos">3</field>
+        <field name="estado">anulada</field>
+    </record>
+
+    <record id="demo_matricula_5" model="ute.matricula">
+        <field name="name">MAT-005</field>
+        <field name="estudiante_id" ref="demo_estudiante_4"/>
+        <field name="periodo">2026-01</field>
+        <field name="asignatura">Marketing</field>
+        <field name="creditos">3</field>
+        <field name="estado">borrador</field>
+    </record>
+
 </odoo>

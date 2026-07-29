@@ -30,6 +30,13 @@ class EstudianteViewSet(viewsets.ModelViewSet):
     queryset = Estudiante.objects.select_related('carrera_id').all()
     serializer_class = EstudianteSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        carrera = self.request.query_params.get('carrera')
+        if carrera:
+            queryset = queryset.filter(carrera_id=carrera)
+        return queryset
+
 
 class MatriculaViewSet(viewsets.ModelViewSet):
     queryset = Matricula.objects.select_related('estudiante_id').all()

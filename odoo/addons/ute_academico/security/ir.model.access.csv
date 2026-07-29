@@ -1,1 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ute_carrera,ute.carrera,model_ute_carrera,base.group_user,1,1,1,1
+access_ute_estudiante,ute.estudiante,model_ute_estudiante,base.group_user,1,1,1,1
+access_ute_matricula,ute.matricula,model_ute_matricula,base.group_user,1,1,1,1

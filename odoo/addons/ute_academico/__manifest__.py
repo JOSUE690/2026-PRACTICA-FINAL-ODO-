@@ -15,6 +15,7 @@
         'views/estudiante_views.xml',
         'views/matricula_views.xml',
         'views/menus.xml',
+        'demo/demo.xml',
     ],
     'demo': [
         'demo/demo.xml',

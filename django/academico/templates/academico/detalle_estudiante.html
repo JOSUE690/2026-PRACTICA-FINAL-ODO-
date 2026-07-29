@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle del estudiante</title>
-</head>
-<body>
-    <h1>{{ estudiante.name }}</h1>
-    <p><strong>Cédula:</strong> {{ estudiante.cedula }}</p>
-    <p><strong>Email:</strong> {{ estudiante.email }}</p>
-    <p><strong>Carrera:</strong> {{ estudiante.carrera_id.name }}</p>
-    <p><strong>Estado:</strong> {{ estudiante.get_estado_display }}</p>
-    <p><strong>Edad:</strong> {{ estudiante.edad }}</p>
-    <a href="{% url 'lista_estudiantes' %}">Volver a la lista</a>
-</body>
-</html>
+{% extends 'academico/base.html' %}
+
+{% block title %}Detalle del estudiante{% endblock %}
+
+{% block content %}
+<h1>{{ estudiante.name }}</h1>
+<p><strong>Cédula:</strong> {{ estudiante.cedula }}</p>
+<p><strong>Email:</strong> {{ estudiante.email }}</p>
+<p><strong>Carrera:</strong> {{ estudiante.carrera_id.name }}</p>
+<p><strong>Estado:</strong> {{ estudiante.get_estado_display }}</p>
+<p><strong>Edad:</strong> {{ estudiante.edad }}</p>
+
+<h2>Matrículas</h2>
+{% if estudiante.matriculas.all %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Periodo</th>
+            <th>Asignatura</th>
+            <th>Estado</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for matricula in estudiante.matriculas.all %}
+            <tr>
+                <td>{{ matricula.name }}</td>
+                <td>{{ matricula.periodo }}</td>
+                <td>{{ matricula.asignatura }}</td>
+                <td>{{ matricula.get_estado_display }}</td>
+                <td>${{ matricula.total|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay matrículas registradas.</p>
+{% endif %}
+
+<a href="{% url 'lista_estudiantes' %}">Volver a la lista</a>
+{% endblock %}

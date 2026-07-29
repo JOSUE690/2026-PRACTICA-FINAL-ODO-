@@ -76,3 +76,40 @@ class AcademicoViewTests(TestCase):
         response = self.client.get(reverse('detalle_estudiante', kwargs={'pk': self.estudiante.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.estudiante.cedula)
+
+    def test_lista_estudiantes_muestra_carrera_y_estado_en_tabla(self):
+        response = self.client.get(reverse('lista_estudiantes'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Carrera')
+        self.assertContains(response, 'Estado')
+        self.assertContains(response, self.carrera.name)
+        self.assertContains(response, 'Activo')
+
+    def test_detalle_estudiante_muestra_tabla_de_matriculas(self):
+        Matricula.objects.create(
+            name='MAT-002',
+            estudiante_id=self.estudiante,
+            periodo='2026-02',
+            asignatura='Bases de Datos',
+            creditos=4,
+            costo_credito='25.00',
+            estado='confirmada',
+        )
+        response = self.client.get(reverse('detalle_estudiante', kwargs={'pk': self.estudiante.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Matrículas')
+        self.assertContains(response, 'Bases de Datos')
+
+    def test_api_estudiantes_puede_filtrar_por_carrera(self):
+        otra_carrera = Carrera.objects.create(name='Diseño', codigo='DIS002', modalidad='presencial')
+        otro_estudiante = Estudiante.objects.create(
+            name='María López',
+            cedula='0900000001',
+            carrera_id=otra_carrera,
+        )
+        response = self.client.get(reverse('estudiante-list'), {'carrera': self.carrera.pk})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]['id'], self.estudiante.pk)
+        self.assertNotEqual(data[0]['id'], otro_estudiante.pk)

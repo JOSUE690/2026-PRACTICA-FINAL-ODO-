@@ -7,6 +7,11 @@
         <field name="arch" type="xml">
             <list string="Matrículas">
                 <field name="name"/>
+                <field name="estudiante_id"/>
+                <field name="asignatura"/>
+                <field name="periodo"/>
+                <field name="estado"/>
+                <field name="total"/>
             </list>
         </field>
     </record>
@@ -16,9 +21,22 @@
         <field name="model">ute.matricula</field>
         <field name="arch" type="xml">
             <form string="Matrícula">
+                <header>
+                    <button name="action_confirmar" type="object" string="Confirmar" class="oe_highlight" invisible="estado != 'borrador'"/>
+                    <button name="action_anular" type="object" string="Anular" invisible="estado == 'anulada'"/>
+                    <field name="estado" widget="statusbar" statusbar_visible="borrador,confirmada,anulada"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="estudiante_id"/>
+                        <field name="periodo"/>
+                        <field name="asignatura"/>
+                        <field name="creditos"/>
+                        <field name="costo_credito"/>
+                        <field name="total"/>
+                        <field name="fecha"/>
+                        <field name="observacion"/>
                     </group>
                 </sheet>
             </form>

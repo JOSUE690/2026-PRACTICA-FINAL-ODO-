@@ -6,7 +6,11 @@
         <field name="model">ute.carrera</field>
         <field name="arch" type="xml">
             <list string="Carreras">
+                <field name="codigo"/>
                 <field name="name"/>
+                <field name="modalidad"/>
+                <field name="total_estudiantes"/>
+                <field name="activa"/>
             </list>
         </field>
     </record>
@@ -19,6 +23,12 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="codigo"/>
+                        <field name="modalidad"/>
+                        <field name="duracion_semestres"/>
+                        <field name="cupo_maximo"/>
+                        <field name="activa"/>
+                        <field name="total_estudiantes"/>
                     </group>
                 </sheet>
             </form>
