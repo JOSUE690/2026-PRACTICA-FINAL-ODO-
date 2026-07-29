@@ -456,19 +456,30 @@ git push origin estudiante/Coraquilla_Josue
 (Si te pide contraseña de GitHub, usa tu usuario y un Personal Access Token (PAT)).  
 DOCX
 
-5. Solución rápida a problemas comunes
-  
-DOCX
-+ 4
-Puerto ocupado (Odoo 8069 o Django 5433):
-
-[cite: 1]
-
-Bash
-sudo lsof -i :8069   # (o 5433)
+5. olución rápida de problemas comunesPuerto 8069 ocupado (Odoo):  Bashsudo lsof -i :8069
 sudo kill -9 <PID>
-Error "no such table" en Django: Faltó migrar[cite: 1]:
+docker compose up -d
+Puerto 5433 ocupado (Django/Postgres):  Bashsudo lsof -i :5433
+sudo service postgresql stop
+docker compose up -d
+Docker está detenido:  Bashsudo service docker start
+El contenedor se cae solo tras levantarlo: No presiones Ctrl+C de inmediato. Espera unos segundos y reinícialo:  Bashdocker compose down
+docker compose up -d
+sleep 10
+docker ps
+Error "Acceso denegado" al abrir un menú en Odoo: Falta agregar la línea correspondiente en security/ir.model.access.csv.  Modifiqué un archivo .py en Odoo y no se ven los cambios: Olvidaste actualizar el módulo con el comando -u ute_academico:  Bashdocker compose exec odoo odoo -d progii -u ute_academico --stop-after-init
+docker compose restart odoo
+Error "no such table" en Django: Faltó aplicar las migraciones:  Bashpython3 manage.py makemigrations
+python3 manage.py migrate
+Ver contenedores activos: docker ps  Ver contenedores detenidos (para depurar): docker ps -a  Revisar por qué falló un contenedor: docker logs <nombre_contenedor>  6. Manejo de múltiples copias (Práctica vs Entrega Real)No puedes tener la práctica y la entrega real de Odoo corriendo de forma simultánea si ambas intentan usar el puerto 8069. Apaga una antes de abrir la otra:  Bash# Para usar tu entorno de práctica:
+cd ~/Escritorio/UTEProgIIFinal/odoo
+docker compose down
+cd ~/ruta/de/tu/practica/odoo
+docker compose up -d
 
-Bash
-python3 manage.py makemigrations && python3 manage.py migrate
-Los cambios de código en Odoo no se ven: Recuerda actualizar el módulo con el comando -u ute_academico[cite: 1].
+# Para volver a tu repositorio de entrega real:
+cd ~/ruta/de/tu/practica/odoo
+docker compose down
+cd ~/Escritorio/UTEProgIIFinal/odoo
+docker compose up -d
+7. Checklist final antes de entregar  [ ] Odoo: los 3 modelos con todos los campos requeridos, constraints y propiedades compute  [ ] Odoo: vistas de tipo lista + formulario diseñadas para los 3 modelos  [ ] Odoo: archivo security/ir.model.access.csv configurado con sus 3 líneas de permisos  [ ] Odoo: archivo demo.xml con 2 carreras, 4 estudiantes y 5 matrículas  [ ] Odoo: las 3 rutas del controlador JSON respondiendo correctamente  [ ] Django: los 3 modelos construidos con choices, clases Meta y propiedades @property  [ ] Django: PostgreSQL corriendo correctamente en Docker (NO usar SQLite)  [ ] Django: vistas de plantillas (base.html, lista de estudiantes y detalle)  [ ] Django: Serializers, ViewSets y Router configurados con Django REST Framework  [ ] Capturas de pantalla de todo lo solicitado guardadas[cite: 1][ ] Archivo ENTREGA.md en la raíz de tu rama con las capturas y el cuadro comparativo[cite: 1][ ] git add, git commit y git push final ejecutados hacia la rama estudiante/Coraquilla_Josue[cite: 1]
