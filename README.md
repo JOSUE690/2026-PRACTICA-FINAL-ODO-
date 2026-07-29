@@ -312,3 +312,163 @@ Resumen de cada práctica:
 - *`TemplateDoesNotExist`* → la plantilla no está en `academico/templates/academico/` o el nombre no coincide.
 - *DRF no aparece* → no agregaste `'rest_framework'` a `INSTALLED_APPS`, o instalaste sin activar el venv.
 - *`NOT NULL constraint failed`* → confundiste `null=True` (base de datos) con `blank=True` (formularios).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+arkdown
+# Guía Rápida de Examen — Programación II
+**Odoo 19 + Django 6 · Docker · Git** — Josué Coraquilla
+
+---
+
+## 0. Descargar el repositorio y entrar a tu rama
+Si es la primera vez que descargas el proyecto, abre tu terminal (WSL) y ejecuta:
+```bash
+cd ~/Escritorio
+git clone [https://github.com/czambrano1997/ProgII_UTE202601.git](https://github.com/czambrano1997/ProgII_UTE202601.git) UTEProgIIFinal
+cd UTEProgIIFinal
+git fetch origin
+git checkout estudiante/Coraquilla_Josue
+git pull origin estudiante/Coraquilla_Josue
+(Si ya tienes la carpeta clonada, solo entra a ella con cd UTEProgIIFinal).  
+DOCX
+
+1. Rutina de arranque diaria
+Cada vez que te sientes a trabajar, arranca con esto:  
+DOCX
+
+Bash
+sudo service docker start
+cd ~/Escritorio/UTEProgIIFinal
+git branch                  # Confirma que estás en tu rama
+git pull origin estudiante/Coraquilla_Josue
+2. Odoo — Levantar y trabajar
+Levantar Odoo y la base de datos
+Bash
+cd ~/Escritorio/UTEProgIIFinal/odoo
+docker compose up -d
+sleep 10
+docker ps        # Confirma que ute_db y ute_odoo estén en estado Up
+Crear la base de datos (Primera vez)
+Entra a http://localhost:8069 en tu navegador y llena los datos:  
+DOCX
+
+Contraseña maestra: ute2026
+
+  
+DOCX
+
+Nombre de BD: progii
+
+  
+DOCX
+
+Correo: admin / Contraseña: admin
+
+  
+DOCX
+
+Datos de demostración: Desmarcado
+
+  
+DOCX
+
+Instalar o actualizar tu módulo
+Instalación rápida por consola:
+
+  
+DOCX
+
+Bash
+docker compose exec odoo odoo -d progii -i ute_academico --stop-after-init
+docker compose restart odoo
+Actualizar módulo (si cambiaste algún archivo .py):
+
+  
+DOCX
+
+Bash
+docker compose exec odoo odoo -d progii -u ute_academico --stop-after-init
+docker compose restart odoo
+Apagar Odoo (sin perder datos)
+Bash
+docker compose down
+3. Django — Levantar y trabajar
+Levantar la Base de Datos (PostgreSQL en Docker)
+(Ojo: El código de Django NO corre en Docker, solo su base de datos).  
+DOCX
+
+Bash
+cd ~/Escritorio/UTEProgIIFinal/django
+docker compose up -d
+sleep 8
+docker ps        # Confirma que ute_django_db esté en Up (puerto 5433)
+Activar el entorno virtual
+(Si es la primera vez, créalo con python3 -m venv venv y haz pip install -r requirements.txt).  
+DOCX
+
+Bash
+cd ~/Escritorio/UTEProgIIFinal/django
+source venv/bin/activate
+Migraciones y datos
+Bash
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py cargar_datos        # Carga datos de prueba
+python3 manage.py createsuperuser     # Crea usuario admin (opcional)
+Levantar el servidor de Django
+Bash
+python3 manage.py runserver 0.0.0.0:8000
+Rutas clave: http://localhost:8000/estudiantes/ y http://localhost:8000/api/estudiantes/.  
+DOCX
+
+Apagar la base de datos de Django
+Bash
+cd ~/Escritorio/UTEProgIIFinal/django
+docker compose down
+4. Git — Guardar y subir tu trabajo
+Bash
+cd ~/Escritorio/UTEProgIIFinal
+git status
+git add .
+git commit -m "feat: actualización de la práctica"
+git push origin estudiante/Coraquilla_Josue
+(Si te pide contraseña de GitHub, usa tu usuario y un Personal Access Token (PAT)).  
+DOCX
+
+5. Solución rápida a problemas comunes
+  
+DOCX
++ 4
+Puerto ocupado (Odoo 8069 o Django 5433):
+
+[cite: 1]
+
+Bash
+sudo lsof -i :8069   # (o 5433)
+sudo kill -9 <PID>
+Error "no such table" en Django: Faltó migrar[cite: 1]:
+
+Bash
+python3 manage.py makemigrations && python3 manage.py migrate
+Los cambios de código en Odoo no se ven: Recuerda actualizar el módulo con el comando -u ute_academico[cite: 1].
